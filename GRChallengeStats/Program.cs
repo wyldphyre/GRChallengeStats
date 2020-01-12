@@ -149,10 +149,10 @@ namespace GRChallengeStats
       }
     }
 
-    public int Year { get; private set; }
-    public int DaysElapsed { get; private set; }
-    public int DaysRemaining { get; private set; }
-    public int DaysInYear { get; private set; }
+    public readonly int Year;
+    public readonly int DaysElapsed;
+    public readonly int DaysRemaining;
+    public readonly int DaysInYear;
   }
 
   public class ChallengeStatistics
