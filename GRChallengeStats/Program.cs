@@ -169,10 +169,10 @@ namespace GRChallengeStats
       MonthsRemaining = Math.Round(yearContext.DaysRemaining / averageDaysInAMonth, 1);
       RequiredBooksPerMonth = Math.Round(BooksRemaining / MonthsRemaining, 2);
       RequiredBookPercentPerDay = Math.Round((double)BooksRemaining / yearContext.DaysRemaining, 2);
-      PercentComplete = Math.Round((double)Challenge.Completed / Challenge.Target, 3);
+      PercentComplete = Math.Round((double)challenge.Completed / challenge.Target, 3);
       CurrentBooksPerMonth = challenge.Completed / monthsElapsed;
       AverageDaysPerBook = Math.Round((double)yearContext.DaysElapsed / challenge.Completed, 2);
-      ForecastBookTotal = Math.Round(challenge.Completed + (YearContext.DaysRemaining / AverageDaysPerBook), 2);
+      ForecastBookTotal = Math.Round(challenge.Completed + (yearContext.DaysRemaining / AverageDaysPerBook), 2);
       RemaningAverageDaysPerBook = challenge.Target - challenge.Completed <= 0 ? 0 : Math.Round((double)yearContext.DaysRemaining / BooksRemaining, 2);
   }
 
