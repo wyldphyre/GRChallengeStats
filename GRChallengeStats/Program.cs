@@ -76,7 +76,7 @@ namespace GRChallengeStats
       Console.WriteLine($"Completed: {completed} {(target == 1 ? "book" : "books")}");
       Console.WriteLine();
 
-      var challenge = new Challenge
+      var challenge = new ReadingChallenge
       {
         Year = year,
         Target = target,
@@ -118,7 +118,7 @@ namespace GRChallengeStats
     }
   }
 
-  public class Challenge
+  public class ReadingChallenge
   {
     public int Year { get; set; }
     public int Target { get; set; }
@@ -157,7 +157,7 @@ namespace GRChallengeStats
 
   public class ChallengeStatistics
   {
-    public ChallengeStatistics(Challenge challenge, YearContext yearContext)
+    public ChallengeStatistics(ReadingChallenge challenge, YearContext yearContext)
     {
       Challenge = challenge;
       YearContext = yearContext;
@@ -176,7 +176,7 @@ namespace GRChallengeStats
       RemaningAverageDaysPerBook = challenge.Target - challenge.Completed <= 0 ? 0 : Math.Round((double)yearContext.DaysRemaining / BooksRemaining, 2);
   }
 
-    public readonly Challenge Challenge;
+    public readonly ReadingChallenge Challenge;
     public readonly YearContext YearContext;
     public readonly int BooksRemaining;
     public readonly double MonthsRemaining;
