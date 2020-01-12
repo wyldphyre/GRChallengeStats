@@ -176,16 +176,16 @@ namespace GRChallengeStats
       RemaningAverageDaysPerBook = challenge.Target - challenge.Completed <= 0 ? 0 : Math.Round((double)yearContext.DaysRemaining / BooksRemaining, 2);
   }
 
-    public Challenge Challenge { get; private set; }
-    public YearContext YearContext { get; private set; }
-    public int BooksRemaining { get; private set; }
-    public double MonthsRemaining { get; private set; }
-    public double RequiredBooksPerMonth { get; private set; }
-    public double RequiredBookPercentPerDay { get; private set; }
-    public double PercentComplete { get; private set; }
-    public double CurrentBooksPerMonth { get; private set; }
-    public double ForecastBookTotal { get; private set; }
-    public double AverageDaysPerBook { get; private set; }
-    public double RemaningAverageDaysPerBook { get; private set; }
+    public readonly Challenge Challenge;
+    public readonly YearContext YearContext;
+    public readonly int BooksRemaining;
+    public readonly double MonthsRemaining;
+    public readonly double RequiredBooksPerMonth;
+    public readonly double RequiredBookPercentPerDay;
+    public readonly double PercentComplete;
+    public readonly double CurrentBooksPerMonth;
+    public readonly double ForecastBookTotal;
+    public readonly double AverageDaysPerBook;
+    public readonly double RemaningAverageDaysPerBook;
   }
 }
