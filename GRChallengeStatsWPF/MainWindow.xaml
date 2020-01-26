@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GRChallengeStatsWPF"
         mc:Ignorable="d"
-        Title="GR Challenge Stats" Height="380" Width="300">
+        Title="GR Challenge Stats" Height="380" Width="300"
+        d:DataContext="{d:DesignInstance local:ChallengeViewModel, IsDesignTimeCreatable=True}">
 
     <Window.DataContext>
         <local:ChallengeViewModel/>

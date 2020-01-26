@@ -17,6 +17,8 @@ namespace GRChallengeStatsWPF
 
         public ChallengeViewModel()
         {
+            // design time data
+            Challenge = new ReadingChallenge { Year = 2020, Target = 30, Completed = 6 };
         }
 
         public ReadingChallenge Challenge
