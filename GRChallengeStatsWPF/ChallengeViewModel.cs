@@ -30,11 +30,7 @@ namespace GRChallengeStatsWPF
             set => SetProperty(ref challenge, value, RestoreChallenge);
         }
 
-        public int Year
-        {
-            get => challenge?.Year ?? 0;
-            //set => this.rais SetProperty(ref year, value);
-        }
+        public int Year => challenge?.Year ?? 0;
 
         public int Target
         {
@@ -42,10 +38,7 @@ namespace GRChallengeStatsWPF
             set => this.SetProperty(ref target, value, UpdateStatistics);
         }
 
-        public string ChallengeProgress
-        {
-            get => $"{statistics?.PercentComplete:P}";
-        }
+        public string ChallengeProgress => $"{statistics?.PercentComplete:P}";
 
         public int BooksCompleted
         {
