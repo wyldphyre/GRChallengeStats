@@ -44,7 +44,11 @@
                 <TextBox x:Name="TargetTextBox" Grid.Row="1" Grid.Column="1" Margin="3" Text="{Binding Target, Mode=TwoWay}"/>
 
                 <Label Grid.Row="2" Grid.Column="0" FontWeight="SemiBold" HorizontalAlignment="Right" Content="Books Completed" />
-                <TextBox x:Name="CompletedTextBox" Grid.Row="2" Grid.Column="1" Margin="3" Text="{Binding BooksCompleted, Mode=TwoWay}"/>
+                <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
+                    <Button Padding="4" Content="-" Command="{Binding DecrementBooksCompletedCommand}" IsEnabled="{Binding HasBooksCompleted}"/> 
+                    <TextBox x:Name="CompletedTextBox" Grid.Row="2" Grid.Column="1" Margin="3" MinWidth="30" Text="{Binding BooksCompleted, Mode=TwoWay}"/>
+                    <Button Padding="4" Content="+" Command="{Binding IncrementBooksCompletedCommand}"/>
+                </StackPanel>
 
                 <Label Grid.Row="3" Grid.Column="0" FontWeight="SemiBold" HorizontalAlignment="Right" Content="Challenge Progress" />
                 <Label Grid.Row="3" Grid.Column="1" Content="{Binding ChallengeProgress}"/>

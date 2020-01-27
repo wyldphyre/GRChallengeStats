@@ -20,6 +20,8 @@ namespace GRChallengeStatsWPF
         {
             // design time data
             Challenge = new ReadingChallenge { Year = 2020, Target = 30, Completed = 6 };
+
+            InitialiseCommands();
         }
 
         public ReadingChallenge Challenge
@@ -57,6 +59,8 @@ namespace GRChallengeStatsWPF
             }
         }
 
+        public bool HasBooksCompleted => BooksCompleted > 0;
+
         public double CurrentBooksPerMonth => statistics?.CurrentBooksPerMonth ?? 0;
 
         public double RequiredBooksPerMonth => statistics?.RequiredBooksPerMonth ?? 0;
@@ -73,11 +77,14 @@ namespace GRChallengeStatsWPF
 
         public double ForecastTotal => statistics?.ForecastBookTotal ?? 0;
 
-        private void LoadChallenge()
+        public ICommand IncrementBooksCompletedCommand { get; set; } 
+
+        public ICommand DecrementBooksCompletedCommand { get; set; }
+
+        private void InitialiseCommands()
         {
-            target = challenge.Target;
-            booksCompleted = challenge.Completed;
-            UpdateStatistics();
+            IncrementBooksCompletedCommand = new RelayCommand(() => BooksCompleted++);
+            DecrementBooksCompletedCommand = new RelayCommand(() => BooksCompleted--, () => BooksCompleted > 0);
         }
 
         private void UpdateStatistics()
@@ -96,6 +103,13 @@ namespace GRChallengeStatsWPF
             RaisePropertyChanged(nameof(DaysPerBook));
             RaisePropertyChanged(nameof(RemainingDaysPerbook));
             RaisePropertyChanged(nameof(ForecastTotal));
+        }
+
+        private void RestoreChallenge()
+        {
+            target = challenge.Target;
+            booksCompleted = challenge.Completed;
+            UpdateStatistics();
         }
 
         private void SaveChallenge()
