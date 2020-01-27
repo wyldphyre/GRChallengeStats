@@ -38,7 +38,7 @@ namespace GRChallengeStatsWPF
             set => this.SetProperty(ref target, value, UpdateStatistics);
         }
 
-        public string ChallengeProgress => $"{statistics?.PercentComplete:P}";
+        public double ChallengeProgress => statistics?.PercentComplete ?? 0;
 
         public int BooksCompleted
         {
@@ -55,10 +55,10 @@ namespace GRChallengeStatsWPF
         public bool HasBooksCompleted => BooksCompleted > 0;
 
         public double CurrentBooksPerMonth => statistics?.CurrentBooksPerMonth ?? 0;
-
+        
         public double RequiredBooksPerMonth => statistics?.RequiredBooksPerMonth ?? 0;
 
-        public string RequiredBookPercentPerDay => $"{statistics?.RequiredBookPercentPerDay:P}";
+        public double RequiredBookPercentPerDay => statistics?.RequiredBookPercentPerDay ?? 0;
 
         public int BooksRemaining => statistics?.BooksRemaining ?? 0;
 

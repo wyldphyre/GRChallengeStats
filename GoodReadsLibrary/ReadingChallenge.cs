@@ -52,7 +52,7 @@ namespace GoodReadsLibrary
             BooksRemaining = challenge.Target - challenge.Completed;
             MonthsRemaining = Math.Round(yearContext.DaysRemaining / averageDaysInAMonth, 1);
             RequiredBooksPerMonth = Math.Round(BooksRemaining / MonthsRemaining, 2);
-            RequiredBookPercentPerDay = Math.Round((double)BooksRemaining / yearContext.DaysRemaining, 2);
+            RequiredBookPercentPerDay = (double)BooksRemaining / yearContext.DaysRemaining;
             PercentComplete = Math.Round((double)challenge.Completed / challenge.Target, 3);
             CurrentBooksPerMonth = challenge.Completed / monthsElapsed;
             AverageDaysPerBook = Math.Round((double)yearContext.DaysElapsed / challenge.Completed, 2);
