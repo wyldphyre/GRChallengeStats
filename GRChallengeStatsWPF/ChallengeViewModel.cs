@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using GoodReadsLibrary;
-using MvvmHelpers;
+using System.Windows.Input;
+using MvvmLibrary;
 
 namespace GRChallengeStatsWPF
 {
@@ -24,7 +25,7 @@ namespace GRChallengeStatsWPF
         public ReadingChallenge Challenge
         {
             get => challenge;
-            set => SetProperty(ref challenge, value, nameof(Challenge), LoadChallenge);
+            set => SetProperty(ref challenge, value, RestoreChallenge);
         }
 
         public int Year
@@ -36,7 +37,7 @@ namespace GRChallengeStatsWPF
         public int Target
         {
             get => target;
-            set => this.SetProperty(ref target, value, nameof(Target), UpdateStatistics);
+            set => this.SetProperty(ref target, value, UpdateStatistics);
         }
 
         public string ChallengeProgress
@@ -47,7 +48,13 @@ namespace GRChallengeStatsWPF
         public int BooksCompleted
         {
             get => booksCompleted;
-            set => this.SetProperty(ref booksCompleted, value, nameof(BooksCompleted), UpdateStatistics);
+            set
+            {
+                if (this.SetProperty(ref booksCompleted, value, UpdateStatistics))
+                {
+                    RaisePropertyChanged(nameof(HasBooksCompleted));
+                }
+            }
         }
 
         public double CurrentBooksPerMonth => statistics?.CurrentBooksPerMonth ?? 0;
@@ -80,15 +87,15 @@ namespace GRChallengeStatsWPF
             SaveChallenge();
 
             statistics = new ChallengeStatistics(challenge, yearContext);
-            OnPropertyChanged(nameof(ChallengeProgress));
-            OnPropertyChanged(nameof(CurrentBooksPerMonth));
-            OnPropertyChanged(nameof(RequiredBooksPerMonth));
-            OnPropertyChanged(nameof(RequiredBookPercentPerDay));
-            OnPropertyChanged(nameof(BooksRemaining));
-            OnPropertyChanged(nameof(MonthsRemaining));
-            OnPropertyChanged(nameof(DaysPerBook));
-            OnPropertyChanged(nameof(RemainingDaysPerbook));
-            OnPropertyChanged(nameof(ForecastTotal));
+            RaisePropertyChanged(nameof(ChallengeProgress));
+            RaisePropertyChanged(nameof(CurrentBooksPerMonth));
+            RaisePropertyChanged(nameof(RequiredBooksPerMonth));
+            RaisePropertyChanged(nameof(RequiredBookPercentPerDay));
+            RaisePropertyChanged(nameof(BooksRemaining));
+            RaisePropertyChanged(nameof(MonthsRemaining));
+            RaisePropertyChanged(nameof(DaysPerBook));
+            RaisePropertyChanged(nameof(RemainingDaysPerbook));
+            RaisePropertyChanged(nameof(ForecastTotal));
         }
 
         private void SaveChallenge()
