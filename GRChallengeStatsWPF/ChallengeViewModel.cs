@@ -4,13 +4,16 @@ using System.Text;
 using GoodReadsLibrary;
 using System.Windows.Input;
 using MvvmLibrary;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace GRChallengeStatsWPF
 {
     class ChallengeViewModel : ObservableObject
     {
+        private ReadingChallenge selectedReadingChallenge;
         private YearContext yearContext;
-        private ReadingChallenge challenge;
+        private ObservableCollection<ReadingChallenge> challenges;
         private ChallengeStatistics statistics;
 
         private int target;
@@ -18,19 +21,33 @@ namespace GRChallengeStatsWPF
 
         public ChallengeViewModel()
         {
-            // design time data
-            Challenge = new ReadingChallenge { Year = 2020, Target = 30, Completed = 6 };
+            Challenges = new ObservableCollection<ReadingChallenge>();
 
+            // design time data
+            challenges.Add(new ReadingChallenge { Year = 2020, Target = 30, Completed = 7 });
+            SelectedReadingChallenge = Challenges.First();
+            
             InitialiseCommands();
         }
 
-        public ReadingChallenge Challenge
+        public void LoadData()
         {
-            get => challenge;
-            set => SetProperty(ref challenge, value, RestoreChallenge);
+            LoadDataFromDisk();
         }
 
-        public int Year => challenge?.Year ?? 0;
+        public ReadingChallenge SelectedReadingChallenge
+        {
+            get => selectedReadingChallenge;
+            set => SetProperty(ref selectedReadingChallenge, value, RestoreChallenge);
+        }
+
+        public ObservableCollection<ReadingChallenge> Challenges
+        {
+            get => challenges;
+            set => SetProperty(ref challenges, value);
+        }
+
+        public int Year => SelectedReadingChallenge?.Year ?? 0;
 
         public int Target
         {
@@ -86,7 +103,7 @@ namespace GRChallengeStatsWPF
 
             SaveChallenge();
 
-            statistics = new ChallengeStatistics(challenge, yearContext);
+            statistics = new ChallengeStatistics(SelectedReadingChallenge, yearContext);
             RaisePropertyChanged(nameof(ChallengeProgress));
             RaisePropertyChanged(nameof(CurrentBooksPerMonth));
             RaisePropertyChanged(nameof(RequiredBooksPerMonth));
@@ -100,15 +117,33 @@ namespace GRChallengeStatsWPF
 
         private void RestoreChallenge()
         {
-            target = challenge.Target;
-            booksCompleted = challenge.Completed;
+            target = SelectedReadingChallenge.Target;
+            booksCompleted = SelectedReadingChallenge.Completed;
+            RaisePropertyChanged(nameof(Year));
+            RaisePropertyChanged(nameof(Target));
+            RaisePropertyChanged(nameof(BooksCompleted));
+
             UpdateStatistics();
         }
 
         private void SaveChallenge()
         {
-            challenge.Target = Target;
-            challenge.Completed = BooksCompleted;
+            SelectedReadingChallenge.Target = Target;
+            SelectedReadingChallenge.Completed = BooksCompleted;
+        }
+
+        private void LoadDataFromDisk()
+        {
+            // TODO: load data from disk into Challenges, and set the current years challenge as the SelectedReadingChallenge
+            Challenges.Clear();
+
+            var currentYearsChallenge = Challenges.FirstOrDefault(c => c.Year == DateTime.Now.Year);
+
+            if (currentYearsChallenge == null)
+            {
+                SelectedReadingChallenge = new ReadingChallenge { Year = DateTime.Now.Year, Target = 0, Completed = 0 };
+                challenges.Add(selectedReadingChallenge);
+            }
         }
     }
 }

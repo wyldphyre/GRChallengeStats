@@ -26,14 +26,14 @@ namespace GRChallengeStatsWPF
         {
             InitializeComponent();
 
-            var challenge = new GoodReadsLibrary.ReadingChallenge { Year = 2020, Target = 30, Completed = 6 };
-
-            viewModel = new ChallengeViewModel
-            {
-                Challenge = challenge
-            };
+            viewModel = new ChallengeViewModel();
 
             DataContext = viewModel;
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            viewModel.LoadData();
         }
     }
 }

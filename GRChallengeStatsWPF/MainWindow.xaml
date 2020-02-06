@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:GRChallengeStatsWPF"
         mc:Ignorable="d"
         Title="GR Challenge Stats" Height="380" Width="300"
-        d:DataContext="{d:DesignInstance local:ChallengeViewModel, IsDesignTimeCreatable=True}">
+        d:DataContext="{d:DesignInstance local:ChallengeViewModel, IsDesignTimeCreatable=True}"
+        Loaded="Window_Loaded">
 
     <Window.DataContext>
         <local:ChallengeViewModel/>
