@@ -19,7 +19,7 @@ namespace MvvmLibrary
         /// <param name="value">Value.</param>
         /// <param name="propertyName">Property name.</param>
         /// <typeparam name="T">The 1st type parameter.</typeparam>
-        protected virtual bool SetProperty<T>(ref T backingValue, T value, [CallerMemberName]string propertyName = "")
+        protected virtual bool SetProperty<T>(ref T backingValue, T value, string propertyName)
         {
             return SetProperty(ref backingValue, value, null, propertyName);
         }
