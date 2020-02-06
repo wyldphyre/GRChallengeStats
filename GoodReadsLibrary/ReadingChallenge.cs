@@ -53,9 +53,9 @@ namespace GoodReadsLibrary
             MonthsRemaining = Math.Round(yearContext.DaysRemaining / averageDaysInAMonth, 1);
             RequiredBooksPerMonth = Math.Round(BooksRemaining / MonthsRemaining, 2);
             RequiredBookPercentPerDay = (double)BooksRemaining / yearContext.DaysRemaining;
-            PercentComplete = Math.Round((double)challenge.Completed / challenge.Target, 3);
+            PercentComplete = challenge.Target > 0 ? Math.Round((double)challenge.Completed / challenge.Target, 3) : 0;
             CurrentBooksPerMonth = challenge.Completed / monthsElapsed;
-            AverageDaysPerBook = Math.Round((double)yearContext.DaysElapsed / challenge.Completed, 2);
+            AverageDaysPerBook = challenge.Completed > 0 ? Math.Round((double)yearContext.DaysElapsed / challenge.Completed, 2) : 0;
             ForecastBookTotal = Math.Round(challenge.Completed + (yearContext.DaysRemaining / AverageDaysPerBook), 2);
             RemaningAverageDaysPerBook = challenge.Target - challenge.Completed <= 0 ? 0 : Math.Round((double)yearContext.DaysRemaining / BooksRemaining, 2);
         }
