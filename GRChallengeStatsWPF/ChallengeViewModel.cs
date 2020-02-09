@@ -9,11 +9,11 @@ using System.Linq;
 
 namespace GRChallengeStatsWPF
 {
-    class ChallengeViewModel : ObservableObject
+    public class ChallengeViewModel : ObservableObject
     {
         private ReadingChallenge selectedReadingChallenge;
         private YearContext yearContext;
-        private ObservableCollection<ReadingChallenge> challenges;
+        private readonly ObservableCollection<ReadingChallenge> challenges;
         private ChallengeStatistics statistics;
 
         private int target;
@@ -21,8 +21,8 @@ namespace GRChallengeStatsWPF
 
         public ChallengeViewModel()
         {
-            Challenges = new ObservableCollection<ReadingChallenge>();
-            
+            challenges = new ObservableCollection<ReadingChallenge>();
+
             InitialiseCommands();
         }
 
@@ -40,7 +40,7 @@ namespace GRChallengeStatsWPF
         public ObservableCollection<ReadingChallenge> Challenges
         {
             get => challenges;
-            set => SetProperty(ref challenges, value);
+            //set => SetProperty(ref challenges, value);
         }
 
         public int Year => SelectedReadingChallenge?.Year ?? 0;
@@ -60,15 +60,15 @@ namespace GRChallengeStatsWPF
             {
                 if (this.SetProperty(ref booksCompleted, value, UpdateStatistics))
                 {
-                    RaisePropertyChanged(nameof(HasBooksCompleted));
+                    HasBooksCompleted = BooksCompleted > 0;
                 }
             }
         }
 
-        public bool HasBooksCompleted => BooksCompleted > 0;
+        public bool HasBooksCompleted { get; set; }
 
         public double CurrentBooksPerMonth => statistics?.CurrentBooksPerMonth ?? 0;
-        
+
         public double RequiredBooksPerMonth => statistics?.RequiredBooksPerMonth ?? 0;
 
         public double RequiredBookPercentPerDay => statistics?.RequiredBookPercentPerDay ?? 0;
@@ -83,14 +83,14 @@ namespace GRChallengeStatsWPF
 
         public double ForecastTotal => statistics?.ForecastBookTotal ?? 0;
 
-        public ICommand IncrementBooksCompletedCommand { get; set; } 
+        public ICommand IncrementBooksCompletedCommand { get; set; }
 
         public ICommand DecrementBooksCompletedCommand { get; set; }
 
         private void InitialiseCommands()
         {
             IncrementBooksCompletedCommand = new RelayCommand(() => BooksCompleted++);
-            DecrementBooksCompletedCommand = new RelayCommand(() => BooksCompleted--, () => BooksCompleted > 0);
+            DecrementBooksCompletedCommand = new RelayCommand(() => BooksCompleted--, () => HasBooksCompleted);
         }
 
         private void UpdateStatistics()
@@ -143,7 +143,7 @@ namespace GRChallengeStatsWPF
         }
     }
 
-    class DesignTimeChallengeViewModel : ChallengeViewModel
+    public class DesignTimeChallengeViewModel : ChallengeViewModel
     {
         public DesignTimeChallengeViewModel()
         {
