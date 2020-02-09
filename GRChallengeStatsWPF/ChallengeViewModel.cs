@@ -22,10 +22,6 @@ namespace GRChallengeStatsWPF
         public ChallengeViewModel()
         {
             Challenges = new ObservableCollection<ReadingChallenge>();
-
-            // design time data
-            challenges.Add(new ReadingChallenge { Year = 2020, Target = 30, Completed = 7 });
-            SelectedReadingChallenge = Challenges.First();
             
             InitialiseCommands();
         }
@@ -144,6 +140,16 @@ namespace GRChallengeStatsWPF
                 SelectedReadingChallenge = new ReadingChallenge { Year = DateTime.Now.Year, Target = 0, Completed = 0 };
                 challenges.Add(selectedReadingChallenge);
             }
+        }
+    }
+
+    class DesignTimeChallengeViewModel : ChallengeViewModel
+    {
+        public DesignTimeChallengeViewModel()
+        {
+            // design time data
+            Challenges.Add(new ReadingChallenge { Year = 2020, Target = 30, Completed = 7 });
+            SelectedReadingChallenge = Challenges.First();
         }
     }
 }
