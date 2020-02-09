@@ -16,9 +16,20 @@ namespace MvvmLibrary
         {
             this.execute = execute ?? throw new ArgumentNullException(nameof(execute));
             this.canExecute = canExecute;
+
+            CanExecuteChanged += RelayCommand_CanExecuteChanged;
         }
 
-        public event EventHandler CanExecuteChanged;
+        private void RelayCommand_CanExecuteChanged(object sender, EventArgs e)
+        {
+            RaiseCanExecuteChanged();
+        }
+
+        public event EventHandler CanExecuteChanged
+        {
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
+        }
 
         public bool CanExecute(object parameter)
         {
@@ -32,7 +43,7 @@ namespace MvvmLibrary
 
         public void RaiseCanExecuteChanged()
         {
-            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+            CommandManager.InvalidateRequerySuggested();
         }
     }
 }
