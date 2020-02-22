@@ -6,6 +6,8 @@ using System.Windows.Input;
 using MvvmLibrary;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace GRChallengeStatsWPF
 {
@@ -19,6 +21,8 @@ namespace GRChallengeStatsWPF
         private int target;
         private int booksCompleted;
 
+        private const string DataFilename = "data.json";
+
         public ChallengeViewModel()
         {
             challenges = new ObservableCollection<ReadingChallenge>();
@@ -29,6 +33,21 @@ namespace GRChallengeStatsWPF
         public void LoadData()
         {
             LoadDataFromDisk();
+        }
+
+        public bool SaveData()
+        {
+            try
+            {
+                SaveDataToDisk();
+
+                return true;
+            }
+            catch
+            {
+                // TODO: pass information about the failure back
+                return false; 
+            }
         }
 
         public ReadingChallenge SelectedReadingChallenge
@@ -130,16 +149,41 @@ namespace GRChallengeStatsWPF
 
         private void LoadDataFromDisk()
         {
-            // TODO: load data from disk into Challenges, and set the current years challenge as the SelectedReadingChallenge
             Challenges.Clear();
+
+            if (File.Exists(DataFilename))
+            {
+                var data = File.ReadAllText(DataFilename);
+
+                var loadedChallenges = JsonConvert.DeserializeObject<List<ReadingChallenge>>(data);
+                foreach (var challenge in loadedChallenges)
+                {
+                    Challenges.Add(challenge);
+                }
+            }
 
             var currentYearsChallenge = Challenges.FirstOrDefault(c => c.Year == DateTime.Now.Year);
 
             if (currentYearsChallenge == null)
             {
-                SelectedReadingChallenge = new ReadingChallenge { Year = DateTime.Now.Year, Target = 0, Completed = 0 };
-                challenges.Add(selectedReadingChallenge);
+                challenges.Add(new ReadingChallenge { Year = DateTime.Now.Year, Target = 0, Completed = 0 });
             }
+
+            SelectedReadingChallenge = Challenges.FirstOrDefault(c => c.Year == DateTime.Now.Year);
+        }
+
+        private void SaveDataToDisk()
+        {
+            if (File.Exists(DataFilename))
+            {
+                // TODO: make a back up the existing data before deleting
+                File.Delete(DataFilename);
+            }
+
+            var data = JsonConvert.SerializeObject(Challenges);
+            File.WriteAllText(DataFilename, data);
+
+            // TODO: Remove the backup file made above
         }
     }
 

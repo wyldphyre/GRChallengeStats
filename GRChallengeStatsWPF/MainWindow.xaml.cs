@@ -35,5 +35,13 @@ namespace GRChallengeStatsWPF
         {
             viewModel.LoadData();
         }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (!viewModel.SaveData())
+            {
+                e.Cancel = true;
+            }
+        }
     }
 }
