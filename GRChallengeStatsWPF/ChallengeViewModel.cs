@@ -192,7 +192,7 @@ namespace GRChallengeStatsWPF
         public DesignTimeChallengeViewModel()
         {
             // design time data
-            Challenges.Add(new ReadingChallenge { Year = 2020, Target = 30, Completed = 7 });
+            Challenges.Add(new ReadingChallenge { Year = 2020, Target = 30, Completed = 8 });
             SelectedReadingChallenge = Challenges.First();
         }
     }
