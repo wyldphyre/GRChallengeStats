@@ -77,14 +77,12 @@ namespace GRChallengeStatsWPF
             get => booksCompleted;
             set
             {
-                if (this.SetProperty(ref booksCompleted, value, UpdateStatistics))
-                {
-                    HasBooksCompleted = BooksCompleted > 0;
-                }
+                this.SetProperty(ref booksCompleted, value, UpdateStatistics);
+                RaisePropertyChanged(nameof(HasBooksCompleted));
             }
         }
 
-        public bool HasBooksCompleted { get; set; }
+        public bool HasBooksCompleted => BooksCompleted > 0;
 
         public double CurrentBooksPerMonth => statistics?.CurrentBooksPerMonth ?? 0;
 
@@ -132,11 +130,15 @@ namespace GRChallengeStatsWPF
 
         private void RestoreChallenge()
         {
+            // not using the public properties here to avoid unwanted updating behaviour
             target = SelectedReadingChallenge.Target;
-            booksCompleted = SelectedReadingChallenge.Completed;
-            RaisePropertyChanged(nameof(Year));
             RaisePropertyChanged(nameof(Target));
-            RaisePropertyChanged(nameof(BooksCompleted));
+
+            booksCompleted = SelectedReadingChallenge.Completed;
+            RaisePropertyChanged(nameof(booksCompleted));
+            
+            RaisePropertyChanged(nameof(Year));
+            RaisePropertyChanged(nameof(HasBooksCompleted));
 
             UpdateStatistics();
         }
