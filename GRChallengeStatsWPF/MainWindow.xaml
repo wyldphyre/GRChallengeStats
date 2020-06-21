@@ -6,7 +6,7 @@
         xmlns:mlc="clr-namespace:MvvmLibrary.Converters;assembly=MvvmLibrary"
         xmlns:local="clr-namespace:GRChallengeStatsWPF"
         mc:Ignorable="d"
-        Title="GR Challenge Stats" Height="420" Width="320"
+        Title="GR Challenge Stats" Height="450" Width="320"
         d:DataContext="{d:DesignInstance local:DesignTimeChallengeViewModel, IsDesignTimeCreatable=True}"
         Loaded="Window_Loaded"
         Closing="Window_Closing"
@@ -20,6 +20,43 @@
     <Window.Resources>
         <mlc:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <mlc:BooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter" Inverted="True"/>
+
+        <Style x:Key="Flat" TargetType="Button">
+            <Setter Property="Background" Value="{x:Null}" />
+            <Setter Property="BorderBrush" Value="{x:Null}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsKeyboardFocused" Value="true">
+                            </Trigger>
+                            <Trigger Property="IsDefaulted" Value="true">
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                            </Trigger>
+                            <Trigger Property="ToggleButton.IsChecked" Value="true">
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="AliceBlue" />
+                    <Setter Property="BorderBrush" Value="Blue" />
+                    <Setter Property="FontWeight" Value="Normal" />
+                </Trigger>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="FontWeight" Value="Normal" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
 
     <Grid>
@@ -56,11 +93,9 @@
 
                 <Label Grid.Row="2" Grid.Column="0" FontWeight="SemiBold" HorizontalAlignment="Right" Content="Books Completed" />
                 <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
-                    <Button FontSize="14" Command="{Binding DecrementBooksCompletedCommand}">
-                        <TextBlock Background="Transparent">–</TextBlock>
-                    </Button>
                     <TextBox x:Name="CompletedTextBox" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" Margin="3" MinWidth="30" Text="{Binding BooksCompleted, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                    <Button FontSize="14" Content="+" Command="{Binding IncrementBooksCompletedCommand}"/>
+                    <Button Style="{StaticResource Flat}" FontSize="15" Content="+1" Command="{Binding IncrementBooksCompletedCommand}"/>
+                    <Button Style="{StaticResource Flat}" FontSize="15" Content="-1" Command="{Binding DecrementBooksCompletedCommand}" Margin="10,0,0,0" />
                 </StackPanel>
 
                 <Label Grid.Row="3" Grid.Column="0" FontWeight="SemiBold" HorizontalAlignment="Right" Content="Challenge Progress" />
