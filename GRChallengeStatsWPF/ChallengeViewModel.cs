@@ -100,6 +100,10 @@ namespace GRChallengeStatsWPF
 
         public double ForecastTotal => statistics?.ForecastBookTotal ?? 0;
 
+        public double BooksPerMonthDifference => statistics?.BooksPerMonthDifference ?? 0;
+
+        public bool HasPositiveBooksPerMonthDifference => BooksPerMonthDifference > 0;
+
         public ICommand IncrementBooksCompletedCommand { get; set; }
 
         public ICommand DecrementBooksCompletedCommand { get; set; }
@@ -126,6 +130,8 @@ namespace GRChallengeStatsWPF
             RaisePropertyChanged(nameof(DaysPerBook));
             RaisePropertyChanged(nameof(RemainingDaysPerbook));
             RaisePropertyChanged(nameof(ForecastTotal));
+            RaisePropertyChanged(nameof(BooksPerMonthDifference));
+            RaisePropertyChanged(nameof(HasPositiveBooksPerMonthDifference));
         }
 
         private void RestoreChallenge()
@@ -194,7 +200,7 @@ namespace GRChallengeStatsWPF
         public DesignTimeChallengeViewModel()
         {
             // design time data
-            Challenges.Add(new ReadingChallenge { Year = 2020, Target = 30, Completed = 8 });
+            Challenges.Add(new ReadingChallenge { Year = 2020, Target = 30, Completed = 23 });
             SelectedReadingChallenge = Challenges.First();
         }
     }

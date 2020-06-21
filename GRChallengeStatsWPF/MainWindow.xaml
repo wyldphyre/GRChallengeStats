@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:mlc="clr-namespace:MvvmLibrary.Converters;assembly=MvvmLibrary"
         xmlns:local="clr-namespace:GRChallengeStatsWPF"
         mc:Ignorable="d"
         Title="GR Challenge Stats" Height="420" Width="320"
@@ -16,6 +17,11 @@
         <local:ChallengeViewModel/>
     </Window.DataContext>
 
+    <Window.Resources>
+        <mlc:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <mlc:BooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter" Inverted="True"/>
+    </Window.Resources>
+
     <Grid>
         <StackPanel Orientation="Vertical">
             <Grid Margin="5">
@@ -25,6 +31,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="auto" />
@@ -78,14 +85,18 @@
                 <Label Grid.Row="10" Grid.Column="0" FontWeight="SemiBold" HorizontalAlignment="Right" Content="Current Books per Month" />
                 <Label Grid.Row="10" Grid.Column="1" Content="{Binding CurrentBooksPerMonth}" ContentStringFormat="N2"/>
 
-                <Label Grid.Row="11" Grid.Column="0" FontWeight="SemiBold" HorizontalAlignment="Right" Content="Days per Book" />
-                <Label Grid.Row="11" Grid.Column="1" Content="{Binding DaysPerBook}" ContentStringFormat="N2"/>
+                <Label Grid.Row="11" Grid.Column="0" FontWeight="SemiBold" HorizontalAlignment="Right" Content="Ahead of Books per Month by" Visibility="{Binding HasPositiveBooksPerMonthDifference, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                <Label Grid.Row="11" Grid.Column="0" FontWeight="SemiBold" HorizontalAlignment="Right" Content="Behind Books per Month by" Visibility="{Binding HasPositiveBooksPerMonthDifference, Converter={StaticResource InverseBooleanToVisibilityConverter}}"/>
+                <Label Grid.Row="11" Grid.Column="1" Content="{Binding BooksPerMonthDifference}" ContentStringFormat="N2"/>
 
-                <Label Grid.Row="12" Grid.Column="0" FontWeight="SemiBold" HorizontalAlignment="Right" Content="Remaining Days per Book" />
-                <Label Grid.Row="12" Grid.Column="1" Content="{Binding RemainingDaysPerbook}" ContentStringFormat="N2"/>
+                <Label Grid.Row="12" Grid.Column="0" FontWeight="SemiBold" HorizontalAlignment="Right" Content="Days per Book" />
+                <Label Grid.Row="12" Grid.Column="1" Content="{Binding DaysPerBook}" ContentStringFormat="N2"/>
 
-                <Label Grid.Row="13" Grid.Column="0" FontWeight="SemiBold" HorizontalAlignment="Right" Content="Forecast Book Total" />
-                <Label Grid.Row="13" Grid.Column="1" Content="{Binding ForecastTotal}" ContentStringFormat="N2"/>
+                <Label Grid.Row="13" Grid.Column="0" FontWeight="SemiBold" HorizontalAlignment="Right" Content="Remaining Days per Book" />
+                <Label Grid.Row="13" Grid.Column="1" Content="{Binding RemainingDaysPerbook}" ContentStringFormat="N2"/>
+
+                <Label Grid.Row="14" Grid.Column="0" FontWeight="SemiBold" HorizontalAlignment="Right" Content="Forecast Book Total" />
+                <Label Grid.Row="15" Grid.Column="1" Content="{Binding ForecastTotal}" ContentStringFormat="N2"/>
             </Grid>
         </StackPanel>
     </Grid>

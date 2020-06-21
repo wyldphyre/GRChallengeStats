@@ -58,6 +58,7 @@ namespace GoodReadsLibrary
             AverageDaysPerBook = challenge.Completed > 0 ? Math.Round((double)yearContext.DaysElapsed / challenge.Completed, 2) : 0;
             ForecastBookTotal = Math.Round(challenge.Completed + (yearContext.DaysRemaining / AverageDaysPerBook), 2);
             RemaningAverageDaysPerBook = challenge.Target - challenge.Completed <= 0 ? 0 : Math.Round((double)yearContext.DaysRemaining / BooksRemaining, 2);
+            BooksPerMonthDifference = CurrentBooksPerMonth - RequiredBooksPerMonth;
         }
 
         public readonly ReadingChallenge Challenge;
@@ -71,5 +72,10 @@ namespace GoodReadsLibrary
         public readonly double ForecastBookTotal;
         public readonly double AverageDaysPerBook;
         public readonly double RemaningAverageDaysPerBook;
+
+        /// <summary>
+        /// The difference between the required books per month rate and the current books per month rate.
+        /// </summary>
+        public readonly double BooksPerMonthDifference;
     }
 }
