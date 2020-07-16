@@ -76,25 +76,32 @@
                 <Button Style="{StaticResource Flat}" FontSize="17" Content="+1" Command="{Binding IncrementBooksCompletedCommand}" Margin="20,0"/>
             </StackPanel>
 
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <!--<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Label FontWeight="Light" HorizontalAlignment="Right" Content="Progress" />
                 <Label Grid.Column="1" Content="{Binding ChallengeProgress}" ContentStringFormat="P2"/>
-            </StackPanel>
+            </StackPanel>-->
 
-            <ProgressBar x:Name="ProgressBar1" Maximum="1" Value="{Binding ChallengeProgress, Mode=OneWay}" Height="10">
-                <!--<ProgressBar.Triggers>
-                    <EventTrigger RoutedEvent="ProgressBar.Loaded">
-                        <BeginStoryboard>
-                            <Storyboard>
-                                <DoubleAnimation
-                                    Storyboard.TargetName="ProgressBar1" 
-                                    Storyboard.TargetProperty="Value"
-                                    From="0" To="100" Duration="0:0:5"  />
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </EventTrigger>
-                </ProgressBar.Triggers>-->
-            </ProgressBar>
+            <Grid>
+                <ProgressBar Foreground="Teal" x:Name="ProgressBar" Maximum="1" Value="{Binding ChallengeProgress, Mode=OneWay}" Height="20">
+                    <!--<ProgressBar.Triggers>
+                        <EventTrigger RoutedEvent="ProgressBar.Loaded">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation
+                                        Storyboard.TargetName="ProgressBar1" 
+                                        Storyboard.TargetProperty="Value"
+                                        From="0" To="100" Duration="0:0:5"  />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </ProgressBar.Triggers>-->
+                </ProgressBar>
+                <TextBlock 
+                    FontSize="12"
+                    Text="{Binding ElementName=ProgressBar, Path=Value, StringFormat={}{0:N2}%}" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center" />
+            </Grid>
 
             <Grid Margin="5">
                 <Grid.ColumnDefinitions>
@@ -120,34 +127,37 @@
                 <Border Grid.Row="1" Grid.ColumnSpan="2" BorderBrush="DimGray" Margin="5" BorderThickness="0,1,0,0" />
 
                 <Label Grid.Row="2" Grid.Column="0" FontWeight="SemiBold" HorizontalAlignment="Right" Content="Required Books per Month" />
-                <Label Grid.Row="2" Grid.Column="1" Content="{Binding RequiredBooksPerMonth}" ContentStringFormat="N2"/>
+                <Label Grid.Row="2" Grid.Column="1" Content="{Binding RequiredBooksPerMonth}" ContentStringFormat="N2" Padding="8,0,0,0" VerticalAlignment="Center"/>
 
                 <Label Grid.Row="3" Grid.Column="0" FontWeight="SemiBold" HorizontalAlignment="Right" Content="Required Book % per Day" />
-                <Label Grid.Row="3" Grid.Column="1" Content="{Binding RequiredBookPercentPerDay}" ContentStringFormat="P2"/>
+                <Label Grid.Row="3" Grid.Column="1" Content="{Binding RequiredBookPercentPerDay}" ContentStringFormat="P2" Padding="8,0,0,0" VerticalAlignment="Center"/>
 
                 <Label Grid.Row="4" Grid.Column="0" FontWeight="SemiBold" HorizontalAlignment="Right" Content="Books Remaining" />
-                <Label Grid.Row="4" Grid.Column="1" Content="{Binding BooksRemaining}"/>
+                <Label Grid.Row="4" Grid.Column="1" Content="{Binding BooksRemaining}" Padding="8,0,0,0" VerticalAlignment="Center"/>
 
                 <Label Grid.Row="5" Grid.Column="0" FontWeight="SemiBold" HorizontalAlignment="Right" Content="Months Remaining" />
-                <Label Grid.Row="5" Grid.Column="1" Content="{Binding MonthsRemaining}" ContentStringFormat="N2"/>
+                <Label Grid.Row="5" Grid.Column="1" Content="{Binding MonthsRemaining}" ContentStringFormat="N2" Padding="8,0,0,0" VerticalAlignment="Center"/>
 
                 <Border Grid.Row="6" Grid.ColumnSpan="2" BorderBrush="DimGray" Margin="5" BorderThickness="0,1,0,0" />
 
+                <!--TODO: use visibile and text runs and colour to put the amount ahead or behind the books per month after the
+                    current books per month number. Should look better and will save a line of height. Will also get rid of a line
+                    that changes with on the left and causes things to move around.--> 
                 <Label Grid.Row="7" Grid.Column="0" FontWeight="SemiBold" HorizontalAlignment="Right" Content="Current Books per Month" />
-                <Label Grid.Row="7" Grid.Column="1" Content="{Binding CurrentBooksPerMonth}" ContentStringFormat="N2"/>
+                <Label Grid.Row="7" Grid.Column="1" Content="{Binding CurrentBooksPerMonth}" ContentStringFormat="N2" Padding="8,0,0,0" VerticalAlignment="Center"/>
 
                 <Label Grid.Row="8" Grid.Column="0" FontWeight="SemiBold" HorizontalAlignment="Right" Content="Ahead of Books per Month by" Visibility="{Binding HasPositiveBooksPerMonthDifference, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                 <Label Grid.Row="8" Grid.Column="0" FontWeight="SemiBold" HorizontalAlignment="Right" Content="Behind Books per Month by" Visibility="{Binding HasPositiveBooksPerMonthDifference, Converter={StaticResource InverseBooleanToVisibilityConverter}}"/>
-                <Label Grid.Row="8" Grid.Column="1" Content="{Binding BooksPerMonthDifference}" ContentStringFormat="N2"/>
+                <Label Grid.Row="8" Grid.Column="1" Content="{Binding BooksPerMonthDifference}" ContentStringFormat="N2" Padding="8,0,0,0" VerticalAlignment="Center"/>
 
                 <Label Grid.Row="9" Grid.Column="0" FontWeight="SemiBold" HorizontalAlignment="Right" Content="Days per Book" />
-                <Label Grid.Row="9" Grid.Column="1" Content="{Binding DaysPerBook}" ContentStringFormat="N2"/>
+                <Label Grid.Row="9" Grid.Column="1" Content="{Binding DaysPerBook}" ContentStringFormat="N2" Padding="8,0,0,0" VerticalAlignment="Center"/>
 
                 <Label Grid.Row="10" Grid.Column="0" FontWeight="SemiBold" HorizontalAlignment="Right" Content="Remaining Days per Book" />
-                <Label Grid.Row="10" Grid.Column="1" Content="{Binding RemainingDaysPerbook}" ContentStringFormat="N2"/>
+                <Label Grid.Row="10" Grid.Column="1" Content="{Binding RemainingDaysPerbook}" ContentStringFormat="N2" Padding="8,0,0,0" VerticalAlignment="Center" />
 
                 <Label Grid.Row="11" Grid.Column="0" FontWeight="SemiBold" HorizontalAlignment="Right" Content="Forecast Book Total" />
-                <Label Grid.Row="11" Grid.Column="1" Content="{Binding ForecastTotal}" ContentStringFormat="N2"/>
+                <Label Grid.Row="11" Grid.Column="1" Content="{Binding ForecastTotal}" ContentStringFormat="N2" Padding="8,0,0,0" VerticalAlignment="Center"/>
             </Grid>
         </StackPanel>
     </Grid>
