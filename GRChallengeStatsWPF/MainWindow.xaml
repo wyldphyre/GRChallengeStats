@@ -61,7 +61,7 @@
 
     <Grid>
         <StackPanel Orientation="Vertical">
-            <Label Content="{Binding Year}"  HorizontalAlignment="Center" FontSize="34" FontWeight="SemiBold"/>
+            <Label Content="{Binding Year}"  HorizontalAlignment="Center" FontSize="40" FontWeight="SemiBold"/>
 
             <StackPanel Orientation="Horizontal"  HorizontalAlignment="Center">
                 <Label HorizontalAlignment="Right" FontWeight="Light" Content="Target" />
