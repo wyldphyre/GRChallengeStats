@@ -13,7 +13,7 @@ This is a work in progress, but works for the current years challenge.
 
 - ~~Move the statistics and common objects into a library~~
 - Implement a desktop app
-  - Implement target editing
+  - Implement target/challenge editing
   - Implement managing a list of years
   - Implement manually adding a new year
 - Implement a mobile app
