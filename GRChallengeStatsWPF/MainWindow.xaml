@@ -82,7 +82,7 @@
             </StackPanel>-->
 
             <Grid>
-                <ProgressBar Foreground="Teal" x:Name="ProgressBar" Maximum="1" Value="{Binding ChallengeProgress, Mode=OneWay}" Height="20">
+                <ProgressBar Foreground="CornflowerBlue" x:Name="ProgressBar" Maximum="1" Value="{Binding ChallengeProgress, Mode=OneWay}" Height="20">
                     <!--<ProgressBar.Triggers>
                         <EventTrigger RoutedEvent="ProgressBar.Loaded">
                             <BeginStoryboard>
