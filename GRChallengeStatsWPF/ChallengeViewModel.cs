@@ -108,10 +108,13 @@ namespace GRChallengeStatsWPF
 
         public ICommand DecrementBooksCompletedCommand { get; set; }
 
+        public ICommand EditChallengeCommand { get; set; }
+
         private void InitialiseCommands()
         {
             IncrementBooksCompletedCommand = new RelayCommand(() => BooksCompleted++);
             DecrementBooksCompletedCommand = new RelayCommand(() => BooksCompleted--, () => HasBooksCompleted);
+            EditChallengeCommand = new RelayCommand(EditChallenge);
         }
 
         private void UpdateStatistics()
@@ -192,6 +195,14 @@ namespace GRChallengeStatsWPF
             File.WriteAllText(DataFilename, data);
 
             // TODO: Remove the backup file made above
+        }
+
+        private void EditChallenge()
+        {
+            var challengeEditViewModel = new ChallengeEditViewModel(SelectedReadingChallenge);
+            var challengeEditView = new ChallengeEditView { DataContext = challengeEditViewModel };
+
+            challengeEditView.ShowDialog();
         }
     }
 

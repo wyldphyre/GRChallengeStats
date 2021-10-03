@@ -5,7 +5,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:GRChallengeStatsWPF"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:mlc="clr-namespace:MvvmLibrary.Converters;assembly=MvvmLibrary"
+    xmlns:mlbehaviours="clr-namespace:MvvmLibrary.Behaviours;assembly=MvvmLibrary"
+    xmlns:mlconverters="clr-namespace:MvvmLibrary.Converters;assembly=MvvmLibrary"
     Title="GR Challenge Stats"
     Width="320"
     Height="510"
@@ -22,8 +23,8 @@
     </Window.DataContext>
 
     <Window.Resources>
-        <mlc:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-        <mlc:BooleanToVisibilityConverter
+        <mlconverters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <mlconverters:BooleanToVisibilityConverter
             x:Key="InverseBooleanToVisibilityConverter"
             Inverted="True" />
 
@@ -72,7 +73,31 @@
     </Window.Resources>
 
     <Grid>
-        <StackPanel Orientation="Vertical">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+
+            <Button
+                Grid.Column="2"
+                Margin="10,5"
+                Command="{Binding EditChallengeCommand}"
+                Content="Edit"
+                FontSize="16"
+                Style="{StaticResource Flat}" />
+
+        </Grid>
+
+        <StackPanel
+            Grid.Row="1"
+            Orientation="Vertical">
             <Label
                 HorizontalAlignment="Center"
                 Content="{Binding Year}"
@@ -83,6 +108,7 @@
                 HorizontalAlignment="Center"
                 Orientation="Horizontal">
                 <TextBlock
+                    mlbehaviours:MouseDownBehaviour.MouseDownCommand="{Binding EditChallengeCommand}"
                     FontSize="13"
                     FontWeight="Light">
                     <Run Text="Target" />
