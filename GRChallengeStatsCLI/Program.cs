@@ -1,7 +1,7 @@
-﻿using System;
+﻿using GoodReadsChallenge.Models;
+using GoodReadsLibrary.Services;
+using System;
 using System.Linq;
-using GoodReadsLibrary;
-using GoodReadsLibrary.Models;
 
 namespace GRChallengeStats
 {
@@ -9,6 +9,8 @@ namespace GRChallengeStats
     {
         static void Main(string[] args)
         {
+            var readingChallengeService = new ReadingChallengeService();
+
             var year = DateTime.Now.Year;
             int target = 0;
             int completed = 0;
@@ -85,14 +87,14 @@ namespace GRChallengeStats
                 Completed = completed
             };
 
-            var yearContext = new YearContext(year);
+            var yearContext = readingChallengeService.GetYearContext(year);
 
             Console.WriteLine($"Days in Year: {yearContext.DaysInYear}");
             Console.WriteLine($"Days Elapsed: {yearContext.DaysElapsed}");
             Console.WriteLine($"Days Remaining: {yearContext.DaysRemaining}");
             Console.WriteLine();
 
-            var statistics = new ChallengeStatistics(challenge, yearContext);
+            var statistics = readingChallengeService.CalculateStatistics(challenge, yearContext);
 
             Console.WriteLine($"Progress: {statistics.PercentComplete:P}");
 
