@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using GoodReadsLibrary;
+using GoodReadsLibrary.Models;
 
 namespace GRChallengeStats
 {

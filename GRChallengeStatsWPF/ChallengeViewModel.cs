@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using GoodReadsLibrary;
 using System.Windows.Input;
 using MvvmLibrary;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.IO;
 using Newtonsoft.Json;
+using GoodReadsLibrary.Models;
 
 namespace GRChallengeStatsWPF
 {
