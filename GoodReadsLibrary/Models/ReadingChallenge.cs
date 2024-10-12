@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace GoodReadsLibrary.Models
+﻿namespace GoodReadsLibrary.Models
 {
     public class ReadingChallenge
     {

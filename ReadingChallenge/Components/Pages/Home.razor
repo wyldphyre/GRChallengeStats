@@ -1,0 +1,58 @@
+﻿@page "/"
+@using GoodReadsChallenge.Models;
+
+<PageTitle>Home</PageTitle>
+
+<h1>Reading Challenges</h1>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th class="text-end">Year</th>
+            <th class="text-end">Target</th>
+            <th class="text-end">Completed</th>
+            <th class="text-end">% Complete</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var challenge in challenges)
+        {
+            <tr class="@RowSuccessClass(challenge)">
+                <td class="text-end">@challenge.Year</td>
+                <td class="text-end">@challenge.Target</td>
+                <td class="text-end">@challenge.Completed</td>
+                <td class="text-end">@PercentComplete(@challenge).ToString("P2")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    private static List<ReadingChallenge> challenges = GetDataFromDisk();
+
+    private static double PercentComplete(ReadingChallenge challenge)
+    {
+        var result = (double)challenge.Completed / challenge.Target;
+        return result;
+    }
+
+    private static string RowSuccessClass(ReadingChallenge challenge)
+    {
+        return PercentComplete(challenge) >= 1 ? string.Empty : "table-danger";
+    }
+
+    private static List<ReadingChallenge> GetDataFromDisk()
+    {
+        var dataFilename = "data.json";
+
+        if (File.Exists(dataFilename))
+        {
+            var data = File.ReadAllText(dataFilename);
+
+            return System.Text.Json.JsonSerializer.Deserialize<List<ReadingChallenge>>(data)
+                   ?? throw new Exception("Failed to load data");
+        }
+
+        return Enumerable.Empty<ReadingChallenge>().ToList();
+    }
+}

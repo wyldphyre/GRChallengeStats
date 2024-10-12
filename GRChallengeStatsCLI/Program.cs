@@ -1,7 +1,9 @@
-﻿using GoodReadsChallenge.Models;
-using GoodReadsLibrary.Services;
-using System;
+﻿using System;
 using System.Linq;
+
+using GoodReadsChallenge.Models;
+
+using GoodReadsLibrary.Services;
 
 namespace GRChallengeStats
 {

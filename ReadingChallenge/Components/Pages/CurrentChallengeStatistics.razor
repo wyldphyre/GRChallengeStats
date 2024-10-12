@@ -1,0 +1,114 @@
+﻿@page "/currentchallengestatistics"
+@rendermode InteractiveServer
+@using GoodReadsLibrary.Services
+@using GoodReadsChallenge.Models;
+
+
+<PageTitle>Current Challenge Statistics</PageTitle>
+
+<h1>Current Challenge Statistics</h1>
+
+<p role="status">Current count: @currentCount</p>
+
+<button class="btn btn-primary" @onclick="IncrementCompleted">+1</button>
+<button class="btn btn-secondary" @onclick="DecrementCompleted">-1</button>
+
+<table>
+    <thead>
+        <tr>
+            <th width="250"></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tr>
+        <td>Year</td>
+        <td>@statistics.YearContext.Year</td>
+    </tr>
+    <tr>
+        <td>Target</td>
+        <td>@statistics.Challenge.Target</td>
+    </tr>
+    <tr>
+        <td>Books Completed</td>
+        <td>@statistics.Challenge.Completed</td>
+    </tr>
+    <tr>
+        <td>% Complete</td>
+        <td>@statistics.PercentComplete.ToString("P2")</td>
+    </tr>
+    <tr>
+        <td>Required Books per Month</td>
+        <td>@statistics.RequiredBooksPerMonth</td>
+    </tr>
+    <tr>
+        <td>Required Book % per day</td>
+        <td>@statistics.RequiredBookPercentPerDay.ToString("P2")</td>
+    </tr>
+    <tr>
+        <td>Books Remaining</td>
+        <td>@statistics.BooksRemaining</td>
+    </tr>
+    <tr>
+        <td>Months Remaining</td>
+        <td>@statistics.MonthsRemaining</td>
+    </tr>
+    <tr>
+        <td>Current Books per Month</td>
+        <td>@statistics.CurrentBooksPerMonth.ToString("G2")</td>
+    </tr>
+    <tr>
+        <td>Behind Books per Month</td>
+        <td>@statistics.BooksPerMonthDifference.ToString("G2")</td>
+    </tr>
+    <tr>
+        <td>Days per Book</td>
+        <td>@statistics.AverageDaysPerBook</td>
+    </tr>
+    <tr>
+        <td>Remaining Days per Book</td>
+        <td>@statistics.RemaningAverageDaysPerBook</td>
+    </tr>
+    <tr>
+        <td>Forecast Book Total</td>
+        <td>@statistics.ForecastBookTotal</td>
+    </tr>
+</table>
+
+@code {
+    private static ReadingChallengeService readingChallengeService = new();
+    private static YearContext yearContext = readingChallengeService.GetYearContext(DateTime.Now.Year);
+    private static List<ReadingChallenge> challenges = GetDataFromDisk();
+    private static ReadingChallenge? currentChallenge = challenges.FirstOrDefault(c => c.Year == yearContext.Year);
+    private static ChallengeStatistics statistics = readingChallengeService.CalculateStatistics(currentChallenge, yearContext);
+
+    private static List<ReadingChallenge> GetDataFromDisk()
+    {
+        var dataFilename = "data.json";
+
+        if (File.Exists(dataFilename))
+        {
+            var data = File.ReadAllText(dataFilename);
+
+            return System.Text.Json.JsonSerializer.Deserialize<List<ReadingChallenge>>(data)
+                   ?? throw new Exception("Failed to load data");
+        }
+
+        return Enumerable.Empty<ReadingChallenge>().ToList();
+    }
+
+    private int currentCount = 0;
+
+    private void IncrementCompleted()
+    {
+        currentChallenge.Completed++;
+
+        statistics = readingChallengeService.CalculateStatistics(currentChallenge, yearContext);
+    }
+
+    private void DecrementCompleted()
+    {
+        currentChallenge.Completed--;
+
+        statistics = readingChallengeService.CalculateStatistics(currentChallenge, yearContext);
+    }
+}

@@ -1,0 +1,57 @@
+[
+  {
+    "Year": 2014,
+    "Target": 22,
+    "Completed": 31
+  },
+  {
+    "Year": 2015,
+    "Target": 42,
+    "Completed": 20
+  },
+  {
+    "Year": 2016,
+    "Target": 24,
+    "Completed": 31
+  },
+  {
+    "Year": 2017,
+    "Target": 24,
+    "Completed": 31
+  },
+  {
+    "Year": 2018,
+    "Target": 24,
+    "Completed": 31
+  },
+  {
+    "Year": 2019,
+    "Target": 24,
+    "Completed": 39
+  },
+  {
+    "Year": 2020,
+    "Target": 30,
+    "Completed": 33
+  },
+  {
+    "Year": 2021,
+    "Target": 24,
+    "Completed": 37
+  },
+  {
+    "Year": 2022,
+    "Target": 30,
+    "Completed": 33
+  },
+  {
+    "Year": 2023,
+    "Target": 72,
+    "Completed": 75
+  },
+  {
+    "Year": 2024,
+    "Target": 66,
+    "Completed": 59
+  }
+]
